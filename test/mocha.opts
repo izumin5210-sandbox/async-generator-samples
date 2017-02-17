@@ -1,0 +1,6 @@
+--require babel-register
+--colors
+--ui bdd
+--reporter dot
+--timeout 5000
+--recursive
