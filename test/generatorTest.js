@@ -5,6 +5,10 @@ function* genFn(): Generator<number, string, boolean> {
   return (yield 1) ? 'hoge' : 'fuga'
 }
 
+function genFn2(): Generator<number, string, boolean> {
+  return genFn();
+}
+
 describe('generator', () => {
   it('returns "hoge" at the end', () => {
     const g = genFn()
@@ -25,4 +29,14 @@ describe('generator', () => {
     assert(n.value === 'fuga')
     assert(n.done)
   })
+
+  it('calls function that returns new generator', () => {
+    const g = genFn2()
+    let n = g.next()
+    assert(n.value === 1)
+    assert(!n.done)
+    n = g.next()
+    assert(n.value === 'fuga')
+    assert(n.done)
+  });
 })
